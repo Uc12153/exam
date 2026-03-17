@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanka SuperMart Employees</title>
+</head>
+
+<body>
+    <h2>Lanka SuperMart Employee Details</h2>
+
+    <table id="employeeTable" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Store Location</th>
+            <th>Section</th>
+            <th>Job Title</th>
+            <th>Employee Type</th>
+            <th>Rating</th>
+        </tr>
+    </table>
+
+    <script>
+        fetch("Lanka_SuperMart_ICTxxx.xml")
+        .then(response => response.text())
+        .then(data => {
+
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(data, "application/xml");
+            const employees = xml.getElementsByTagName("Employee");
+
+            let table = document.getElementById("employeeTable");
+
+            for (let i = 0; i < employees.length; i++) {
+
+                let id = employees[i].getElementsByTagName("ID")[0].textContent;
+                let fullName = employees[i].getElementsByTagName("FullName")[0].textContent;
+                let store = employees[i].getElementsByTagName("StoreLocation")[0].textContent;
+                let section = employees[i].getElementsByTagName("StoreLocation")[0].getAttribute("section");
+                let job = employees[i].getElementsByTagName("JobTitle")[0].textContent;
+                let type = employees[i].getElementsByTagName("JobTitle")[0].getAttribute("employeeType");
+                let rating = employees[i].getElementsByTagName("Rating")[0].textContent;
+
+                let row = table.insertRow(-1);
+
+                row.insertCell(0).innerHTML = id;
+                row.insertCell(1).innerHTML = fullName;
+                row.insertCell(2).innerHTML = store;
+                row.insertCell(3).innerHTML = section;
+                row.insertCell(4).innerHTML = job;
+                row.insertCell(5).innerHTML = type;
+                row.insertCell(6).innerHTML = rating;
+            }
+        })
+        .catch(error => {
+            console.error("Error loading XML:", error);
+        });
+    </script>
+
+</body>
+</html>
