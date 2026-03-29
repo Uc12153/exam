@@ -1,0 +1,50 @@
+<?xml version ="1.0"encoding "UTF-8"?>
+
+<LankaSuperMart>
+    <Employee>
+        <ID>893</ID>
+        <FullName gender="Male">Saman Perera</FullName>
+        <StoreLocation section="Bakery">Colombo</StoreLocation>
+        <JobTitle employeeType="Full-Time">Baker</JobTitle>
+        <Rating>4.5</Rating>
+    </Employee> 
+</LankaSuperMart>
+----------
+<script>
+     fetch ("Lan.xml")
+     .then(response=>response.text())
+     .then(data=>{
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(data,"application/xml");
+        const employees = xml.getElementsByTagName("Employee");
+        let table = document.getElementById("employeeTable");
+            for (let i=0; i<employees.length; i++){
+                 
+                let id = employees[i].getElementsByTagName("ID")[0].textContent;
+                let store = employees[i].getElementsByTagName("StoreLoction")[0].getAttribute("Section");
+
+                let row = table.inertRow(-1);
+
+                row.inertCell(0).innerHTML=id;
+            }
+
+        }
+
+        )
+        .catch(error=>{
+            console.error("Error loading xml: ",error);
+        }
+
+        );
+
+    </script>
+-------------------------
+<table id="employee tabale" border="1">
+    <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+         <th>Section</th>
+            <th>Job Title</th>
+            <th>Employee Type</th>
+            <th>Rating</th>
+    </tr>
