@@ -1,0 +1,98 @@
+package com.example.abc;
+
+public class Employee {
+    private int empID;
+    private String name;
+    private int age;
+
+    public Employee(){
+
+    }
+    public Employee(int empID,String name,int age){
+        this.empID = empID;
+        this.name = name;
+        this.age = age;
+    }
+    public int getId(){
+        return empID;
+    }
+    public void setID(int empID){
+        this.empID = empID;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public int getage(){
+        return age;
+    }
+    public void  setage(int age){
+        this.age =age;
+    }
+    
+}
+----------------------------------------
+package com.example.abc;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+public class Controller {
+    @RestController
+    @RequestMapping("/employees")
+
+    public class InnerController {
+    
+        
+        private List<Employee>employees=new ArrayList<>(); 
+        @GetMapping
+        public List <Employee>getEmployees(){
+            return employees;
+        }
+        @GetMapping("/{id}")
+        public Employee getEmployee(@PathVariable int id){
+            for(Employee employee : employees){
+                if(employee.getId()==id){
+                    return employee;
+                }
+            }
+            return null;
+        }
+        @PostMapping
+        public String addEmployee(@RequestBody Employee employee){
+            employees.add(employee);
+            return "New Employee Added";
+        }
+        @PutMapping("/{id}")
+
+        public String updateEmployee(@PathVariable int id,@RequestBody Employee newEmployee){
+            for (Employee employee : employees){
+                if(employee.getId()==id){
+                    employee.setName(newEmployee.getName());
+                    employee.setage(newEmployee.getage());
+                    return "Employee update Succesfull";
+                }
+            }
+            return "Employee Not Found";
+        }
+        @DeleteMapping("/{id}")
+
+        public String deletEmployee(@PathVariable int id){
+            employees.removeIf(emp->emp.getId()==id);
+            return "Employee Deleate Susesfull";
+        }
+    }
+
+    
+}
