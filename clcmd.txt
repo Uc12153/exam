@@ -1,0 +1,122 @@
+wi Power
+
+New-AzResourceGroup -Name 'SWT41042ICT407' -Location 'centralindia'
+$cred = Get-Credential
+$diskConfig = New-AzDiskConfig -AccountType 'StandardSSD_LRS' -Location 'centralindia' -CreateOption Empty -DiskSizeGB 128
+New-AzVm `
+  -ResourceGroupName 'SWT41042ICT407' `
+  -Name 'ICT407VM1' `
+  -Location 'centralindia' `
+  -Image 'MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition:latest' `
+  -Credential $cred `
+  -OpenPorts 80, 3389
+Get-AzPublicIpAddress -ResourceGroupName 'SWT41042ICT407' | Select-Object Name, IpAddress
+-------------------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SEUSL Hackathon 2025</title>
+</head>
+
+<body>
+
+    <h1>SEUSL Hackathon 2025</h1>
+
+    <p>Annual Innovation Challenge</p>
+
+    <h2>Event Details</h2>
+
+    <p><b>Date:</b> 15th October 2025</p>
+    <p><b>Venue:</b> South Eastern University of Sri Lanka</p>
+
+    <h2>About the Event</h2>
+
+    <p>
+        The SEUSL Hackathon 2025 is a 24-hour coding challenge
+        that brings together students to design and develop
+        innovative technology solutions.
+    </p>
+
+    <h2>How to Register</h2>
+
+    <p>
+        <a href="https://www.seu.ac.lk/register">
+            Register Here
+        </a>
+    </p>
+
+    <h2>Contact Details</h2>
+
+    <p>Email: info@seu.ac.lk</p>
+    <p>Phone: +94 77 123 4567</p>
+
+</body>
+</html>
+---------------------------------
+sudo apt-get update
+sudo apt-get install apache2
+cd /var/www/html/
+sudo mv index.html demo.html
+sudo nano index.html
+-------------------------------------
+sudo apt-get update
+sudo apt install docker.io
+docker --version
+
+sudo docker images
+
+sudo docker pull httpd
+sudo docker pull httpd:latest
+sudo docker pull httpd:2.4.57
+sudo docker pull ubuntu
+sudo docker pull ubuntu:lunar-20230816
+
+sudo docker run -d -it --name myhttpd httpd
+sudo docker inspect [image_id] / [image_name]
+sudo docker history [image_id] / [image_name]
+sudo docker save [image_id / image_name] >filename.tar
+
+sudo docker rmi [image_id /image_name]
+sudo docker load -i filename.tar
+sudo docker run -d -it --name ubuntu-dev ubuntu:latest
+sudo docker exec -it ubuntu-testing-env /bin/bash
+sudo docker push release7:1.3
+sudo docker login
+sudo docker tag release7:1.3 aslamsujah/release7:1.3
+sudo docker push aslamsujah/release7:1.3
+
+----------------------------------------------------------------
+sudo apt-get update
+sudo apt install docker.io -y
+
+docker --version
+
+sudo docker images
+
+sudo docker pull httpd
+sudo docker pull httpd:latest
+sudo docker pull httpd:2.4.57
+
+sudo docker pull ubuntu
+sudo docker pull ubuntu:latest
+
+sudo docker run -d -it --name myhttpd httpd
+
+sudo docker inspect httpd
+sudo docker history httpd
+
+sudo docker save httpd > httpd.tar
+
+sudo docker rmi httpd
+
+sudo docker load -i httpd.tar
+
+sudo docker run -d -it --name ubuntu-dev ubuntu:latest
+
+sudo docker exec -it ubuntu-dev /bin/bash
+
+sudo docker login
+
+sudo docker tag release7:1.3 aslamsujah/release7:1.3
+
+sudo docker push aslamsujah/release7:1.3
