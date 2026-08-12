@@ -1,0 +1,178 @@
+student(alice,22,female,maths,87).
+student(bob,19,male,ict,66).
+student(clara,18,female,english,55).
+student(david,21,male,ict,45).
+student(eva,20,female,maths,70).
+student(frank,17,male,english,22).
+
+
+course(maths,8).
+course(ict,4).
+course(english,2).
+
+grade(Name,'A'):-
+    student(Name,_,_,_,Mark),
+    Mark>=75.
+
+grade(Name,'B'):-
+    student(Name,_,_,_,Mark),
+    Mark>=60,
+    Mark<75.
+
+grade(Name,'C'):-
+    student(Name,_,_,_,Mark),
+    Mark>=50,
+    Mark<60.
+grade(Name,'F'):-
+    student(Name,_,_,_,Mark),
+    Mark<50.
+
+passed(Name):-
+    grade(Name,Grade),
+    Grade \='F'.
+
+certificate(Name):-
+    student(Name,Age,_,_,_),
+    Age>=18,
+    passed(Name).
+
+highest_student(Course, Name, Mark) :-
+    student(Name, _, _, Course, Mark),
+    forall(
+        student(_, _, _, Course, Mark2),
+        Mark >= Mark2
+    ).
+
+honars(Name):-
+    student(Name,_,_,Course,Mark),
+    Mark>=85,
+    course(Course,Credits),
+    Credits>=3.
+
+
+display_grade :-
+    student(Name, _, _, _, _),
+    grade(Name, Grade),
+    write(Name),
+    write(': Grade '),
+    write(Grade),
+    nl,
+    fail.
+display_grade.
+--------------------------------------------------------
+lab05
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import scipy as sp
+
+df=pd.read_csv('banking.csv')
+df.head()
+
+print("first 5 rows")
+print(df.head())
+
+print("\n Dataset shape",df.shape)
+
+print("\n Columns:",df.columns.tolist())
+
+print("\n Data types:")
+print(df.dtypes)
+
+print("Missing values")
+print(df.isnull().sum())
+
+print("\n Statical Summary:")
+print(df.describe())
+
+print("\n Mean value:")
+print(df.mean(numeric_only=True))
+
+print("\n Stand deviation:")
+print(df.std(numeric_only=True))
+
+older = df[df['age']>50]
+print( "Customer older than 50:",len(older))
+
+plt.figure(figsize=(10,5))
+df['job'].value_counts().plot(kind='bar')
+plt.xlabel('job')
+plt.ylabel('count')
+plt.title('Job vs Count')
+plt.show()
+
+plt.figure(figsize=(10,5))
+sns.boxplot(x='education',y='age',data=df)
+plt.xlabel('education')
+plt.ylabel('age')
+plt.title('education vs age')
+plt.show()
+
+plt.figure(figsize=(10,5))
+df.groupby('job')['age'].mean().sort_values().plot(kind='bar')
+plt.xlabel('job')
+plt.ylabel('age')
+plt.title('job vs age')
+plt.show()
+
+plt.figure(figsize=(8,5))
+plt.hist(df['age'],bins=20)
+plt.xlabel('age')
+plt.ylabel('count')
+plt.title('age vs count')
+plt.show()
+
+plt.figure(figsize=(8,5))
+sns.histplot(df['age'],kde=True)
+plt.xlabel('age')
+plt.title('age Distribution')
+plt.show()
+
+plt.figure(figsize=(8,5))
+plt.scatter(df['age'],df['duration'])
+plt.xlabel('age')
+plt.ylabel('duration')
+plt.title('age vs duration')
+plt.show()
+
+------------------------------------------------------
+
+lab 06
+
+import pandas as pd
+import numpy as np
+
+data = [10, 20, 30, 40, 50]
+
+s = pd.Series(data)
+
+print(s)
+
+
+student={
+    "Name":["Amal","Kamal","Nimal"],
+    "Age":[21,22,20],
+    "Marks":[75,88,91]
+}
+df=pd.DataFrame(student)
+print(df)
+
+
+df.to_excel("student.xlsx",index=False)
+print('Data save')
+
+df.head()
+
+df.tail()
+
+df.info()
+
+df.describe()
+
+df.isnull()
+
+df.isnull().sum()
+
+df.dropna()
